@@ -1,10 +1,10 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Screen-Free Activity Finder – SmartSprout 🌱",
+  title: "Screen-Free Activity Finder – Kiddleaf 🌱",
   description: "Find engaging, educational, and fun screen-free activities for kids. Search by age, time available, and location (indoor/outdoor).",
   alternates: {
-    canonical: "https://smartsprout.com/tools/activity-finder",
+    canonical: "https://kiddleaf.com/tools/activity-finder",
   }
 };
 
@@ -16,7 +16,7 @@ export default function ActivityFinderLayout({
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "EducationalApplication",
-    "name": "SmartSprout Activity Finder",
+    "name": "Kiddleaf Activity Finder",
     "description": "Search engine for screen-free, educational activities for children of all ages.",
     "applicationCategory": "EducationalApplication",
     "operatingSystem": "Any",

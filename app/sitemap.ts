@@ -1,6 +1,6 @@
 import { MetadataRoute } from 'next';
 
-const siteUrl = 'https://smartsprout.com'; // Placeholder for production URL
+const siteUrl = 'https://kiddleaf.com'; // Production URL
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const routes = [

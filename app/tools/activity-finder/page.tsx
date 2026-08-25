@@ -77,9 +77,9 @@ export default function ActivityFinderPage() {
       setActivities(data.activities || []);
 
       // Save to localStorage
-      const saved = JSON.parse(localStorage.getItem("smartsprout_activities") || "[]");
+      const saved = JSON.parse(localStorage.getItem("kiddleaf_activities") || "[]");
       saved.unshift({ activities: data.activities, createdAt: new Date().toISOString() });
-      localStorage.setItem("smartsprout_activities", JSON.stringify(saved.slice(0, 10)));
+      localStorage.setItem("kiddleaf_activities", JSON.stringify(saved.slice(0, 10)));
     } catch (err) {
       console.error(err);
       alert("Failed to generate activities. Please try again!");
@@ -339,7 +339,7 @@ export default function ActivityFinderPage() {
           <section>
             <h2 className="text-2xl font-heading font-bold text-sprout-800 mb-4">Find the Perfect Screen-Free Activity</h2>
             <p className="text-gray-600 font-body leading-relaxed mb-4">
-              Struggling to find ways to keep your kids entertained without handing them a tablet? The SmartSprout Activity Finder is your ultimate parenting hack! Just select the age of your child, how much time you have, and whether you're indoors or outdoors. Our AI will instantly suggest engaging, educational, and fun activities you can do together using items you likely already have around the house.
+              Struggling to find ways to keep your kids entertained without handing them a tablet? The Kiddleaf Activity Finder is your ultimate parenting hack! Just select the age of your child, how much time you have, and whether you're indoors or outdoors. Our AI will instantly suggest engaging, educational, and fun activities you can do together using items you likely already have around the house.
             </p>
           </section>
 

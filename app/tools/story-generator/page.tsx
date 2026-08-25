@@ -62,9 +62,9 @@ export default function StoryGeneratorPage() {
       setCurrentPage(0);
 
       // Save to localStorage
-      const saved = JSON.parse(localStorage.getItem("smartsprout_stories") || "[]");
+      const saved = JSON.parse(localStorage.getItem("kiddleaf_stories") || "[]");
       saved.unshift({ ...data, createdAt: new Date().toISOString() });
-      localStorage.setItem("smartsprout_stories", JSON.stringify(saved.slice(0, 10)));
+      localStorage.setItem("kiddleaf_stories", JSON.stringify(saved.slice(0, 10)));
     } catch (err) {
       console.error(err);
       alert("Failed to generate story. Please try again!");
@@ -349,7 +349,7 @@ export default function StoryGeneratorPage() {
           <section>
             <h2 className="text-2xl font-heading font-bold text-sprout-800 mb-4">Generate Personalized Bedtime Stories with AI</h2>
             <p className="text-gray-600 font-body leading-relaxed mb-4">
-              Make bedtime magical with SmartSprout's custom AI story generator. By entering your child's name, age, and favorite themes, our advanced AI weaves a completely unique, safe, and engaging narrative in seconds. From exploring space with friendly robots to discovering hidden magical forests, the possibilities are endless.
+              Make bedtime magical with Kiddleaf's custom AI story generator. By entering your child's name, age, and favorite themes, our advanced AI weaves a completely unique, safe, and engaging narrative in seconds. From exploring space with friendly robots to discovering hidden magical forests, the possibilities are endless.
             </p>
           </section>
 

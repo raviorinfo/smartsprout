@@ -4,7 +4,7 @@ export const metadata: Metadata = {
   title: "Sprout the Tutor – Safe AI Chat for Kids 🌱",
   description: "A safe, COPPA-compliant AI tutor that encourages curiosity by guiding kids to find answers themselves instead of just giving them the solution.",
   alternates: {
-    canonical: "https://smartsprout.com/tools/tutor",
+    canonical: "https://kiddleaf.com/tools/tutor",
   }
 };
 

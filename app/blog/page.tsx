@@ -5,10 +5,10 @@ import { blogPosts } from "@/lib/blogData";
 import { BookOpen, Calendar, ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Parents Blog & Resources – SmartSprout 🌱",
+  title: "Parents Blog & Resources – Kiddleaf 🌱",
   description: "Expert tips, guides, and resources on early childhood education, screen-free activities, and parenting.",
   alternates: {
-    canonical: "https://smartsprout.com/blog",
+    canonical: "https://kiddleaf.com/blog",
   }
 };
 

@@ -14,7 +14,7 @@ export const blogPosts: BlogPost[] = [
     title: "The Top 5 Benefits of Screen-Free Activities for Toddlers",
     excerpt: "Discover why unplugging is crucial for early childhood development and how to easily incorporate more screen-free time into your daily routine.",
     date: "August 24, 2026",
-    author: "SmartSprout Editorial Team",
+    author: "Kiddleaf Editorial Team",
     category: "Parenting Tips",
     content: `
       <h2>Why Screen-Free Time Matters</h2>
@@ -35,8 +35,8 @@ export const blogPosts: BlogPost[] = [
       <h3>5. Increases Attention Span</h3>
       <p>Fast-paced media trains the brain to expect constant, rapid stimulation. Slower, physical activities like reading a book or finishing a coloring page help stretch a child's attention span and focus.</p>
 
-      <h2>How SmartSprout Can Help</h2>
-      <p>We designed SmartSprout to bridge the gap between AI technology and physical play. Use our Worksheet Generator or Coloring Pages to instantly create custom, printable activities that pull your kids away from the screen and into the real world!</p>
+      <h2>How Kiddleaf Can Help</h2>
+      <p>We designed Kiddleaf to bridge the gap between AI technology and physical play. Use our Worksheet Generator or Coloring Pages to instantly create custom, printable activities that pull your kids away from the screen and into the real world!</p>
     `
   },
   {
@@ -44,7 +44,7 @@ export const blogPosts: BlogPost[] = [
     title: "How to Teach Math to Kids Without the Tears",
     excerpt: "Math anxiety starts early. Learn how to make math fun, engaging, and stress-free for young learners using everyday objects and custom worksheets.",
     date: "August 20, 2026",
-    author: "SmartSprout Education Experts",
+    author: "Kiddleaf Education Experts",
     category: "Education",
     content: `
       <h2>The Root of Math Anxiety</h2>
@@ -57,7 +57,7 @@ export const blogPosts: BlogPost[] = [
       <p>When a child gets a math problem wrong, don't just say "No, that's wrong." Ask them to explain how they got their answer. Praising their effort and logic—even if the final calculation was off—builds confidence and resilience.</p>
 
       <h3>Practice with Personalized Worksheets</h3>
-      <p>Generic math drills can be boring. Try using the SmartSprout Worksheet Generator to create custom math practice that matches your child's exact skill level. If they love space, you can talk about counting rockets or stars while they complete their printable worksheets.</p>
+      <p>Generic math drills can be boring. Try using the Kiddleaf Worksheet Generator to create custom math practice that matches your child's exact skill level. If they love space, you can talk about counting rockets or stars while they complete their printable worksheets.</p>
 
       <h2>Keep It Short and Sweet</h2>
       <p>Attention spans are short in early childhood. Instead of a grueling 45-minute math session, aim for 10-15 minutes of focused, fun math practice a day. Consistency is far more effective than marathon study sessions.</p>
@@ -68,7 +68,7 @@ export const blogPosts: BlogPost[] = [
     title: "The Magic of Personalized Bedtime Stories",
     excerpt: "Why personalized storytelling is a game-changer for early literacy and building a lifelong love for reading.",
     date: "August 15, 2026",
-    author: "SmartSprout Editorial Team",
+    author: "Kiddleaf Editorial Team",
     category: "Literacy",
     content: `
       <h2>Beyond Traditional Books</h2>
@@ -81,7 +81,7 @@ export const blogPosts: BlogPost[] = [
       <p>Personalized stories are also an incredible parenting tool. Is your child afraid of the dark? Or perhaps nervous about starting a new school? You can craft a story where a brave character (with your child's name) faces and overcomes that exact same challenge.</p>
 
       <h3>Endless Possibilities with AI</h3>
-      <p>With tools like the SmartSprout Story Maker, you don't need to be a professional author to create these magical moments. By simply inputting your child's name, age, and current interests (whether that's princesses, dinosaurs, or garbage trucks), you can generate a brand-new, totally unique bedtime story in seconds.</p>
+      <p>With tools like the Kiddleaf Story Maker, you don't need to be a professional author to create these magical moments. By simply inputting your child's name, age, and current interests (whether that's princesses, dinosaurs, or garbage trucks), you can generate a brand-new, totally unique bedtime story in seconds.</p>
 
       <h2>Start a New Tradition</h2>
       <p>Try making personalized stories a regular part of your bedtime routine. It not only builds literacy skills but creates a special, bonding experience between you and your child that standard books just can't match.</p>

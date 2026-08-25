@@ -4,8 +4,8 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://smartsprout.com"),
-  title: "SmartSprout – AI Learning Adventures for Kids 🌱",
+  metadataBase: new URL("https://kiddleaf.com"),
+  title: "Kiddleaf – AI Learning Adventures for Kids 🌱",
   description:
     "Free AI-powered educational tools for kids ages 3-10. Create stories, worksheets, coloring pages, and screen-free activities. COPPA compliant and 100% child-safe.",
   keywords: [
@@ -17,16 +17,16 @@ export const metadata: Metadata = {
     "activities for kids",
   ],
   openGraph: {
-    title: "SmartSprout – AI Learning Adventures for Kids 🌱",
+    title: "Kiddleaf – AI Learning Adventures for Kids 🌱",
     description: "Free AI-powered educational tools for kids ages 3-10. Create stories, worksheets, coloring pages, and more.",
-    url: "https://smartsprout.com",
-    siteName: "SmartSprout",
+    url: "https://kiddleaf.com",
+    siteName: "Kiddleaf",
     images: [
       {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "SmartSprout - AI Educational Tools for Kids",
+        alt: "Kiddleaf - AI Educational Tools for Kids",
       },
     ],
     locale: "en_US",
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "SmartSprout – AI Learning Adventures for Kids 🌱",
+    title: "Kiddleaf – AI Learning Adventures for Kids 🌱",
     description: "Free AI-powered educational tools for kids ages 3-10.",
     images: ["/og-image.png"],
   },

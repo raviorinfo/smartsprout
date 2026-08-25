@@ -2,8 +2,8 @@ import React from "react";
 import { Shield, Lock, Eye, Trash2, Mail } from "lucide-react";
 
 export const metadata = {
-  title: "Privacy Policy – SmartSprout",
-  description: "COPPA-compliant privacy policy for SmartSprout kids learning platform.",
+  title: "Privacy Policy – Kiddleaf",
+  description: "COPPA-compliant privacy policy for Kiddleaf kids learning platform.",
 };
 
 export default function PrivacyPolicyPage() {
@@ -32,7 +32,7 @@ export default function PrivacyPolicyPage() {
               <h2 className="text-xl font-heading font-bold text-gray-800 !mt-0">Our Commitment to Privacy</h2>
             </div>
             <p className="text-gray-600 leading-relaxed">
-              SmartSprout (&ldquo;we,&rdquo; &ldquo;our,&rdquo; or &ldquo;us&rdquo;) is committed to protecting the privacy of children.
+              Kiddleaf (&ldquo;we,&rdquo; &ldquo;our,&rdquo; or &ldquo;us&rdquo;) is committed to protecting the privacy of children.
               We comply with the Children&apos;s Online Privacy Protection Act (COPPA) and all applicable privacy laws.
               This Privacy Policy explains our practices regarding information when you use our website and services.
             </p>
@@ -66,7 +66,7 @@ export default function PrivacyPolicyPage() {
               <h2 className="text-xl font-heading font-bold text-gray-800 !mt-0">Local Browser Storage</h2>
             </div>
             <p className="text-gray-600 leading-relaxed">
-              SmartSprout uses your browser&apos;s localStorage feature to save your &ldquo;Recent Creations&rdquo;
+              Kiddleaf uses your browser&apos;s localStorage feature to save your &ldquo;Recent Creations&rdquo;
               (stories, worksheets, coloring pages, and activities) so you can revisit them.
               This data never leaves your device and can be cleared at any time by clearing your browser data.
             </p>

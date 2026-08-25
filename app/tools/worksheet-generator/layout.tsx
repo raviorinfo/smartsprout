@@ -1,10 +1,10 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "AI Worksheet Generator – SmartSprout 🌱",
+  title: "AI Worksheet Generator – Kiddleaf 🌱",
   description: "Create free, printable math, English, Hindi, and GK worksheets instantly with AI. Generate full workbooks and download as PDFs.",
   alternates: {
-    canonical: "https://smartsprout.com/tools/worksheet-generator",
+    canonical: "https://kiddleaf.com/tools/worksheet-generator",
   }
 };
 
@@ -16,7 +16,7 @@ export default function WorksheetLayout({
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "EducationalApplication",
-    "name": "SmartSprout Worksheet Generator",
+    "name": "Kiddleaf Worksheet Generator",
     "description": "Generate custom educational worksheets for math, language, and general knowledge.",
     "applicationCategory": "EducationalApplication",
     "operatingSystem": "Any",

@@ -1,10 +1,10 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Gamified Math Quests – SmartSprout 🌱",
+  title: "Gamified Math Quests – Kiddleaf 🌱",
   description: "Turn math homework into an epic video game! Solve math problems to defeat monsters and unlock treasures.",
   alternates: {
-    canonical: "https://smartsprout.com/tools/math-quests",
+    canonical: "https://kiddleaf.com/tools/math-quests",
   }
 };
 
@@ -12,7 +12,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "EducationalApplication",
-    "name": "SmartSprout Math Quests",
+    "name": "Kiddleaf Math Quests",
     "description": "A gamified math learning tool that turns homework into an interactive narrative quest.",
     "applicationCategory": "EducationalApplication",
     "operatingSystem": "Any",

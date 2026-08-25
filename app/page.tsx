@@ -22,10 +22,10 @@ import AdSenseBanner from "@/components/AdSenseBanner";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "SmartSprout – Free AI Learning & Activities for Kids 🌱",
+  title: "Kiddleaf – Free AI Learning & Activities for Kids 🌱",
   description: "Discover free, AI-generated educational tools for kids. Create personalized stories, math worksheets, coloring pages, and screen-free activities instantly.",
   alternates: {
-    canonical: "https://smartsprout.com",
+    canonical: "https://kiddleaf.com",
   }
 };
 
@@ -168,12 +168,12 @@ export default function Home() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "name": "SmartSprout",
-    "url": "https://smartsprout.com",
+    "name": "Kiddleaf",
+    "url": "https://kiddleaf.com",
     "description": "Free AI-powered educational tools for kids. Generate worksheets, coloring pages, and stories.",
     "potentialAction": {
       "@type": "SearchAction",
-      "target": "https://smartsprout.com/tools/activity-finder?q={search_term_string}",
+      "target": "https://kiddleaf.com/tools/activity-finder?q={search_term_string}",
       "query-input": "required name=search_term_string"
     }
   };
@@ -358,7 +358,7 @@ export default function Home() {
                 Built for Safety. Designed for Joy.
               </h3>
               <p className="text-sprout-200 max-w-lg mx-auto mb-8 font-body leading-relaxed">
-                SmartSprout is designed with child safety as the top priority. We
+                Kiddleaf is designed with child safety as the top priority. We
                 follow COPPA guidelines, collect zero personal data, and all content
                 is age-appropriate.
               </p>

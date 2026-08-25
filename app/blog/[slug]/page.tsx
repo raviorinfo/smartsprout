@@ -14,10 +14,10 @@ export function generateMetadata({ params }: Props): Metadata {
     return { title: "Post Not Found" };
   }
   return {
-    title: `${post.title} – SmartSprout Blog`,
+    title: `${post.title} – Kiddleaf Blog`,
     description: post.excerpt,
     alternates: {
-      canonical: `https://smartsprout.com/blog/${post.slug}`,
+      canonical: `https://kiddleaf.com/blog/${post.slug}`,
     }
   };
 }

@@ -50,9 +50,9 @@ export default function ColoringPagesPage() {
       setResult(data);
 
       // Save to localStorage
-      const saved = JSON.parse(localStorage.getItem("smartsprout_coloring") || "[]");
+      const saved = JSON.parse(localStorage.getItem("kiddleaf_coloring") || "[]");
       saved.unshift({ prompt: finalPrompt, createdAt: new Date().toISOString() });
-      localStorage.setItem("smartsprout_coloring", JSON.stringify(saved.slice(0, 10)));
+      localStorage.setItem("kiddleaf_coloring", JSON.stringify(saved.slice(0, 10)));
     } catch (err) {
       console.error(err);
       alert("Failed to generate coloring page. Please try again!");
@@ -108,7 +108,7 @@ export default function ColoringPagesPage() {
       printWindow.document.write(`
         <!DOCTYPE html>
         <html>
-          <head><title>Coloring Page - SmartSprout</title></head>
+          <head><title>Coloring Page - Kiddleaf</title></head>
           <body style="margin:0; display:flex; justify-content:center; align-items:center; min-height:100vh;">
             <img src="${result.image}" style="max-width:100%; max-height:100vh;" onload="window.print(); window.close();" />
           </body>

@@ -1,10 +1,10 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "AI Story Generator for Kids – SmartSprout 🌱",
+  title: "AI Story Generator for Kids – Kiddleaf 🌱",
   description: "Create personalized bedtime stories for your children using AI. Include their name, age, and favorite themes for a magical reading experience.",
   alternates: {
-    canonical: "https://smartsprout.com/tools/story-generator",
+    canonical: "https://kiddleaf.com/tools/story-generator",
   }
 };
 
@@ -16,7 +16,7 @@ export default function StoryGeneratorLayout({
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "EducationalApplication",
-    "name": "SmartSprout Story Generator",
+    "name": "Kiddleaf Story Generator",
     "description": "AI-powered custom bedtime story generator for kids. Enhances reading skills and imagination.",
     "applicationCategory": "EducationalApplication",
     "operatingSystem": "Any",

@@ -12,8 +12,8 @@ import {
 } from "lucide-react";
 
 export const metadata = {
-  title: "Parent's Guide – SmartSprout",
-  description: "A guide for parents on how to use SmartSprout safely with their children.",
+  title: "Parent's Guide – Kiddleaf",
+  description: "A guide for parents on how to use Kiddleaf safely with their children.",
 };
 
 const tips = [
@@ -96,7 +96,7 @@ export default function ParentGuidePage() {
             Parent&apos;s Guide
           </h1>
           <p className="text-gray-500 text-lg max-w-xl mx-auto">
-            Everything you need to know about using SmartSprout with your children safely and effectively.
+            Everything you need to know about using Kiddleaf with your children safely and effectively.
           </p>
         </div>
 

@@ -1,7 +1,7 @@
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 
-const BRAND_FOOTER = "Generated free on SmartSprout.com";
+const BRAND_FOOTER = "Generated free on Kiddleaf.com";
 
 interface WorksheetQuestion {
   question: string;

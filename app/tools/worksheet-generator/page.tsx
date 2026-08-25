@@ -108,9 +108,9 @@ export default function WorksheetGeneratorPage() {
       setWorksheet(data);
 
       // Save to localStorage
-      const saved = JSON.parse(localStorage.getItem("smartsprout_worksheets") || "[]");
+      const saved = JSON.parse(localStorage.getItem("kiddleaf_worksheets") || "[]");
       saved.unshift({ ...data, createdAt: new Date().toISOString() });
-      localStorage.setItem("smartsprout_worksheets", JSON.stringify(saved.slice(0, 10)));
+      localStorage.setItem("kiddleaf_worksheets", JSON.stringify(saved.slice(0, 10)));
     } catch (err) {
       console.error(err);
       alert("Failed to generate worksheet. Please try again!");
@@ -503,7 +503,7 @@ export default function WorksheetGeneratorPage() {
           <section>
             <h2 className="text-2xl font-heading font-bold text-sprout-800 mb-4">How to Use the Free Math Worksheet Generator</h2>
             <p className="text-gray-600 font-body leading-relaxed mb-4">
-              SmartSprout's AI-powered worksheet generator makes it incredibly easy to create custom, printable worksheets for your children or students. Whether you need addition practice for a first grader or complex fraction problems for older kids, our tool generates unique math problems in seconds.
+              Kiddleaf's AI-powered worksheet generator makes it incredibly easy to create custom, printable worksheets for your children or students. Whether you need addition practice for a first grader or complex fraction problems for older kids, our tool generates unique math problems in seconds.
             </p>
             <ol className="list-decimal list-inside text-gray-600 font-body space-y-2">
               <li>Select your preferred subject (Math, English, Hindi, or GK).</li>
@@ -525,7 +525,7 @@ export default function WorksheetGeneratorPage() {
             <div className="space-y-4">
               <div>
                 <h3 className="font-heading font-bold text-gray-800">Is the worksheet generator completely free?</h3>
-                <p className="text-gray-600 text-sm mt-1">Yes! All worksheets generated on SmartSprout are 100% free to create, download, and print for personal or classroom use.</p>
+                <p className="text-gray-600 text-sm mt-1">Yes! All worksheets generated on Kiddleaf are 100% free to create, download, and print for personal or classroom use.</p>
               </div>
               <div>
                 <h3 className="font-heading font-bold text-gray-800">Do the worksheets come with an answer key?</h3>

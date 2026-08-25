@@ -31,7 +31,7 @@ export default function Footer() {
                 <Sprout className="w-6 h-6 text-white" />
               </div>
               <span className="text-2xl font-heading font-extrabold text-white">
-                SmartSprout
+                Kiddleaf
               </span>
             </div>
             <p className="text-sm text-sprout-200 font-body leading-relaxed">

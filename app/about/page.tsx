@@ -3,10 +3,10 @@ import { Sprout, Heart, Shield, Sparkles } from "lucide-react";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "About Us – SmartSprout 🌱",
-  description: "Learn about SmartSprout's mission to provide free, safe, and magical AI educational tools for children.",
+  title: "About Us – Kiddleaf 🌱",
+  description: "Learn about Kiddleaf's mission to provide free, safe, and magical AI educational tools for children.",
   alternates: {
-    canonical: "https://smartsprout.com/about",
+    canonical: "https://kiddleaf.com/about",
   }
 };
 
@@ -19,7 +19,7 @@ export default function AboutPage() {
             <Sprout className="w-8 h-8 text-white" />
           </div>
           <h1 className="text-4xl md:text-5xl font-heading font-extrabold text-sprout-800">
-            About SmartSprout
+            About Kiddleaf
           </h1>
           <p className="text-xl text-gray-600 font-body">
             Nurturing young minds with the magic of AI.
@@ -33,7 +33,7 @@ export default function AboutPage() {
               Our Mission
             </h2>
             <p className="text-gray-600 font-body leading-relaxed">
-              At SmartSprout, we believe that learning should be a magical adventure. 
+              At Kiddleaf, we believe that learning should be a magical adventure. 
               Our mission is to provide parents and educators with free, high-quality, 
               and endlessly customizable educational tools. By harnessing the power of 
               artificial intelligence, we create unique learning experiences that adapt 
@@ -48,7 +48,7 @@ export default function AboutPage() {
             </h2>
             <p className="text-gray-600 font-body leading-relaxed">
               As parents ourselves, we know that digital safety is non-negotiable. 
-              SmartSprout is built from the ground up to be 100% COPPA compliant. 
+              Kiddleaf is built from the ground up to be 100% COPPA compliant. 
               We do not collect personally identifiable information (PII) from children, 
               we do not use behavioral tracking, and all generated content is heavily 
               filtered to ensure it is always age-appropriate and family-friendly.

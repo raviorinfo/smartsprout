@@ -3,10 +3,10 @@ import { Mail, MessageCircle, Clock } from "lucide-react";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Contact Us – SmartSprout 🌱",
-  description: "Get in touch with the SmartSprout team for support, feedback, or business inquiries.",
+  title: "Contact Us – Kiddleaf 🌱",
+  description: "Get in touch with the Kiddleaf team for support, feedback, or business inquiries.",
   alternates: {
-    canonical: "https://smartsprout.com/contact",
+    canonical: "https://kiddleaf.com/contact",
   }
 };
 
