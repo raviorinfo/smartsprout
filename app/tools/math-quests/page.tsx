@@ -23,6 +23,31 @@ export default function MathQuestsPage() {
   const [health, setHealth] = useState(3);
   const [score, setScore] = useState(0);
 
+  const fetchQuest = async (stage: number) => {
+    try {
+      const res = await fetch("/api/generate-math-quest", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: setupData.name.trim(),
+          grade: setupData.grade,
+          theme: setupData.theme,
+          stage,
+          score,
+        }),
+      });
+      
+      const data = await res.json();
+      if (data.error) throw new Error(data.error);
+      setQuest(data);
+    } catch (err) {
+      console.error("Math quest error:", err);
+      alert("Failed to generate quest stage. Please try again!");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const startQuest = () => {
     if (!setupData.name.trim()) return;
     setLoading(true);
@@ -31,50 +56,14 @@ export default function MathQuestsPage() {
     setScore(0);
     setFeedback("none");
     setUserAnswer("");
-    
-    // Mock the first quest generation
-    setTimeout(() => {
-      setQuest({
-        stage: 1,
-        narrative: `Sir ${setupData.name} approaches the Bridge of Trolls. A grumpy Troll steps out and blocks the path. "You shall not pass until you solve my riddle!" he growls.`,
-        question: "What is 5 + 3?",
-        correctAnswer: 8
-      });
-      setLoading(false);
-    }, 1200);
+    fetchQuest(1);
   };
 
   const nextStage = (currentStage: number) => {
     setLoading(true);
     setFeedback("none");
     setUserAnswer("");
-
-    setTimeout(() => {
-      if (currentStage === 1) {
-        setQuest({
-          stage: 2,
-          narrative: `The Troll grumbles and steps aside. You cross the bridge and find a glowing treasure chest! But wait, it has a magical lock on it.`,
-          question: "What is 10 - 4?",
-          correctAnswer: 6
-        });
-      } else if (currentStage === 2) {
-        setQuest({
-          stage: 3,
-          narrative: `The chest opens, revealing the legendary Star Crystal! But a flock of pesky goblins swoops down to snatch it! Quick, cast a spell to scare them away!`,
-          question: "What is 7 + 5?",
-          correctAnswer: 12
-        });
-      } else {
-        setQuest({
-          stage: 4,
-          narrative: `The goblins flee in terror! You have successfully retrieved the Star Crystal and saved the kingdom. You are a true hero!`,
-          question: "",
-          correctAnswer: 0,
-          isComplete: true
-        });
-      }
-      setLoading(false);
-    }, 1200);
+    fetchQuest(currentStage + 1);
   };
 
   const checkAnswer = () => {

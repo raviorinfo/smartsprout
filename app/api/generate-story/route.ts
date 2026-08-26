@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { generateChatCompletion } from "@/lib/openai";
+import { checkRateLimit, getClientId } from "@/lib/rateLimit";
 
 const MOCK_STORY = {
   title: "Luna's Magical Space Adventure",
@@ -34,6 +35,11 @@ const MOCK_STORY = {
 
 export async function POST(request: NextRequest) {
   try {
+    const { allowed, remaining } = checkRateLimit(getClientId(request), { maxRequests: 15, windowMs: 60000 });
+    if (!allowed) {
+      return NextResponse.json({ error: "Too many requests. Please wait a moment and try again!" }, { status: 429, headers: { "X-RateLimit-Remaining": remaining.toString() } });
+    }
+
     const body = await request.json();
     const { childName, age, theme, storyLength } = body;
 

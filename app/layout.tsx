@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Nunito, Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -43,6 +44,20 @@ export const metadata: Metadata = {
 import BookCartDrawer from "@/components/BookCartDrawer";
 import CookieBanner from "@/components/CookieBanner";
 
+const nunito = Nunito({
+  subsets: ["latin"],
+  variable: "--font-heading",
+  weight: ["400", "600", "700", "800", "900"],
+  display: "swap",
+});
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-body",
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+});
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -50,7 +65,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="min-h-screen flex flex-col">
+      <body className={`min-h-screen flex flex-col ${nunito.variable} ${inter.variable}`}>
         <div className="print:hidden"><Navbar /></div>
         <main className="flex-1">{children}</main>
         <div className="print:hidden"><Footer /></div>

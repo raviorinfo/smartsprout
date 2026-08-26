@@ -1,13 +1,14 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import { Send, Loader2, Sparkles, ShieldCheck, Info } from "lucide-react";
+import { Send, Loader2, Sparkles, ShieldCheck, Info, Mic, Square, Volume2 } from "lucide-react";
 import AdSenseBanner from "@/components/AdSenseBanner";
 
 type Message = {
   id: string;
   role: "user" | "sprout";
   content: string;
+  audioBase64?: string | null;
 };
 
 export default function SproutTutorPage() {
@@ -20,7 +21,11 @@ export default function SproutTutorPage() {
   ]);
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
+  const [isRecording, setIsRecording] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+  const audioChunksRef = useRef<Blob[]>([]);
+  const audioPlayerRef = useRef<HTMLAudioElement | null>(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -30,7 +35,110 @@ export default function SproutTutorPage() {
     scrollToBottom();
   }, [messages]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleAudioPlayback = (base64Audio: string) => {
+    if (audioPlayerRef.current) {
+      const audioUrl = `data:audio/mp3;base64,${base64Audio}`;
+      audioPlayerRef.current.src = audioUrl;
+      audioPlayerRef.current.play().catch(e => console.error("Audio play failed:", e));
+    }
+  };
+
+  const startRecording = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      const mediaRecorder = new MediaRecorder(stream);
+      mediaRecorderRef.current = mediaRecorder;
+      audioChunksRef.current = [];
+
+      mediaRecorder.ondataavailable = (event) => {
+        if (event.data.size > 0) {
+          audioChunksRef.current.push(event.data);
+        }
+      };
+
+      mediaRecorder.onstop = () => {
+        const audioBlob = new Blob(audioChunksRef.current, { type: "audio/webm" });
+        sendAudioToServer(audioBlob);
+        stream.getTracks().forEach(track => track.stop());
+      };
+
+      mediaRecorder.start();
+      setIsRecording(true);
+    } catch (err) {
+      console.error("Error accessing microphone:", err);
+      alert("Please allow microphone access to talk to Sprout!");
+    }
+  };
+
+  const stopRecording = () => {
+    if (mediaRecorderRef.current && isRecording) {
+      mediaRecorderRef.current.stop();
+      setIsRecording(false);
+    }
+  };
+
+  const sendAudioToServer = async (audioBlob: Blob) => {
+    setIsTyping(true);
+    
+    // We add a placeholder user message since we don't know the transcribed text yet
+    const placeholderId = Date.now().toString();
+    setMessages(prev => [...prev, {
+      id: placeholderId,
+      role: "user",
+      content: "🎤 (Voice Message)",
+    }]);
+
+    try {
+      const history = messages
+        .filter(m => m.id !== "1") // Skip the initial greeting
+        .map(m => ({
+          role: m.role === "user" ? "user" : "assistant",
+          content: m.content,
+        }));
+
+      const formData = new FormData();
+      formData.append("audio", audioBlob);
+      formData.append("history", JSON.stringify(history));
+
+      const res = await fetch("/api/generate-tutor", {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await res.json();
+      if (data.error) throw new Error(data.error);
+
+      // Update the placeholder with the actual transcribed text
+      if (data.transcribedMessage) {
+        setMessages(prev => prev.map(m => m.id === placeholderId ? { ...m, content: data.transcribedMessage } : m));
+      }
+
+      const sproutMsg: Message = {
+        id: (Date.now() + 1).toString(),
+        role: "sprout",
+        content: data.reply,
+        audioBase64: data.audio,
+      };
+
+      setMessages(prev => [...prev, sproutMsg]);
+      
+      if (data.audio) {
+        handleAudioPlayback(data.audio);
+      }
+    } catch (err) {
+      console.error("Tutor error:", err);
+      const errorMsg: Message = {
+        id: (Date.now() + 1).toString(),
+        role: "sprout",
+        content: "Oops! My brain got a little tangled there. 🤔 Could you try asking that again?",
+      };
+      setMessages(prev => [...prev, errorMsg]);
+    } finally {
+      setIsTyping(false);
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim() || isTyping) return;
 
@@ -44,27 +152,55 @@ export default function SproutTutorPage() {
     setInput("");
     setIsTyping(true);
 
-    // Mock API call to an LLM using the Socratic method
-    setTimeout(() => {
+    try {
+      const history = [...messages, userMsg]
+        .filter(m => m.id !== "1")
+        .map(m => ({
+          role: m.role === "user" ? "user" : "assistant",
+          content: m.content,
+        }));
+
+      const formData = new FormData();
+      formData.append("message", userMsg.content);
+      formData.append("history", JSON.stringify(history));
+
+      const res = await fetch("/api/generate-tutor", {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await res.json();
+      if (data.error) throw new Error(data.error);
+
       const sproutMsg: Message = {
         id: (Date.now() + 1).toString(),
         role: "sprout",
-        content: "That's a fantastic question! Let's think about it together like scientists. If you had to guess based on what you already know, why do you think that happens? 🧐"
+        content: data.reply,
+        audioBase64: data.audio,
       };
-      
-      // Check if it's a math question to show specific behavior
-      const lowerInput = userMsg.content.toLowerCase();
-      if (lowerInput.includes("+") || lowerInput.includes("-") || lowerInput.match(/\d/)) {
-        sproutMsg.content = "I see numbers! I won't just give you the answer, because you have a brilliant brain. Let's break it down into smaller steps. What do you get if you take away the ones place first?";
-      }
 
       setMessages(prev => [...prev, sproutMsg]);
+
+      if (data.audio) {
+        handleAudioPlayback(data.audio);
+      }
+    } catch (err) {
+      console.error("Tutor error:", err);
+      const errorMsg: Message = {
+        id: (Date.now() + 1).toString(),
+        role: "sprout",
+        content: "Oops! My brain got a little tangled there. 🤔 Could you try asking that again?",
+      };
+      setMessages(prev => [...prev, errorMsg]);
+    } finally {
       setIsTyping(false);
-    }, 1500);
+    }
   };
 
   return (
     <div className="min-h-screen bg-sprout-50 py-8 px-4 sm:px-6 lg:px-8 flex flex-col">
+      <audio ref={audioPlayerRef} className="hidden" />
+      
       <div className="max-w-4xl mx-auto w-full flex-1 flex flex-col space-y-6">
         
         {/* Header */}
@@ -84,7 +220,7 @@ export default function SproutTutorPage() {
         <div className="bg-emerald-100/50 border border-emerald-200 rounded-xl p-3 flex items-center justify-center gap-3 max-w-xl mx-auto w-full">
           <ShieldCheck className="w-5 h-5 text-emerald-600" />
           <span className="text-sm font-heading font-semibold text-emerald-800">
-            100% Kid-Safe AI • No PII Collected • Guided Learning Mode
+            100% Kid-Safe AI • No PII Collected • Voice Chat Enabled
           </span>
         </div>
 
@@ -102,12 +238,23 @@ export default function SproutTutorPage() {
                   {msg.role === 'user' ? '👤' : '🌱'}
                 </div>
                 
-                <div className={`px-5 py-4 rounded-2xl font-body text-lg ${
+                <div className={`px-5 py-4 rounded-2xl font-body text-lg group ${
                   msg.role === 'user' 
                     ? 'bg-indigo-50 text-indigo-900 rounded-tr-none border border-indigo-100' 
                     : 'bg-white border border-gray-100 text-gray-800 rounded-tl-none shadow-sm'
                 }`}>
-                  {msg.content}
+                  <div className="flex items-start justify-between gap-4">
+                    <p>{msg.content}</p>
+                    {msg.audioBase64 && (
+                      <button 
+                        onClick={() => handleAudioPlayback(msg.audioBase64!)}
+                        className="text-gray-400 hover:text-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity"
+                        title="Replay Audio"
+                      >
+                        <Volume2 className="w-5 h-5" />
+                      </button>
+                    )}
+                  </div>
                 </div>
               </div>
             ))}
@@ -129,19 +276,41 @@ export default function SproutTutorPage() {
 
           {/* Input Area */}
           <div className="p-4 bg-gray-50 border-t border-gray-100">
-            <form onSubmit={handleSubmit} className="relative flex items-center">
+            <form onSubmit={handleSubmit} className="relative flex items-center gap-2">
               <input
                 type="text"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                placeholder="Why is the sky blue? How do airplanes fly?"
-                className="w-full px-6 py-4 rounded-full border-2 border-gray-200 focus:border-emerald-400 focus:ring-4 focus:ring-emerald-400/20 outline-none transition-all font-body text-gray-700 text-lg pr-16"
-                disabled={isTyping}
+                placeholder="Why is the sky blue? Or click the mic to talk!"
+                className="flex-1 px-6 py-4 rounded-full border-2 border-gray-200 focus:border-emerald-400 focus:ring-4 focus:ring-emerald-400/20 outline-none transition-all font-body text-gray-700 text-lg"
+                disabled={isTyping || isRecording}
               />
+              
+              {isRecording ? (
+                <button
+                  type="button"
+                  onClick={stopRecording}
+                  className="w-14 h-14 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center shadow-lg transition-all animate-pulse flex-shrink-0"
+                  aria-label="Stop recording"
+                >
+                  <Square className="w-6 h-6 fill-current" />
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  onClick={startRecording}
+                  disabled={isTyping || !!input.trim()}
+                  className="w-14 h-14 bg-white border-2 border-emerald-200 text-emerald-500 hover:bg-emerald-50 rounded-full flex items-center justify-center transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex-shrink-0"
+                  title="Talk to Sprout"
+                >
+                  <Mic className="w-6 h-6" />
+                </button>
+              )}
+
               <button
                 type="submit"
-                disabled={!input.trim() || isTyping}
-                className="absolute right-2 w-12 h-12 bg-emerald-500 hover:bg-emerald-600 text-white rounded-full flex items-center justify-center transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled={!input.trim() || isTyping || isRecording}
+                className="w-14 h-14 bg-emerald-500 hover:bg-emerald-600 text-white rounded-full flex items-center justify-center transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex-shrink-0 shadow-sm"
                 aria-label="Send message"
               >
                 <Send className="w-5 h-5 ml-1" />
@@ -157,9 +326,10 @@ export default function SproutTutorPage() {
         {/* SEO Bottom */}
         <div className="mt-16 bg-white rounded-3xl p-8 border border-sprout-100 shadow-sm space-y-8">
           <section>
-            <h2 className="text-2xl font-heading font-bold text-sprout-800 mb-4">The Socratic Method of Learning</h2>
+            <h2 className="text-2xl font-heading font-bold text-sprout-800 mb-4">Voice-Enabled Socratic Learning</h2>
             <p className="text-gray-600 font-body leading-relaxed">
-              When a child asks a question, the easiest thing to do is give them the answer. However, educational research shows that true comprehension and critical thinking skills are developed when children are guided to deduce the answers themselves. Sprout the Tutor is explicitly instructed to act as a "Socratic Tutor". Instead of acting as an encyclopedia, it acts as a mentor—asking guiding questions, breaking down complex problems, and celebrating the child's deductive reasoning.
+              When a child asks a question, the easiest thing to do is give them the answer. However, educational research shows that true comprehension and critical thinking skills are developed when children are guided to deduce the answers themselves. Sprout the Tutor is explicitly instructed to act as a "Socratic Tutor". 
+              Now, with our new <strong>Voice Mode</strong>, even younger children can talk to Sprout and hear its encouraging responses read aloud!
             </p>
           </section>
         </div>

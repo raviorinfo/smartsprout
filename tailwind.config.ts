@@ -50,8 +50,8 @@ const config: Config = {
         },
       },
       fontFamily: {
-        heading: ["Nunito", "ui-rounded", "system-ui", "sans-serif"],
-        body: ["Inter", "system-ui", "sans-serif"],
+        heading: ["var(--font-heading)", "ui-rounded", "system-ui", "sans-serif"],
+        body: ["var(--font-body)", "system-ui", "sans-serif"],
       },
       borderRadius: {
         "4xl": "2rem",

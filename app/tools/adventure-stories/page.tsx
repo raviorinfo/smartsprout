@@ -20,65 +20,64 @@ export default function AdventureStoriesPage() {
   const [loading, setLoading] = useState(false);
   const [storyHistory, setStoryHistory] = useState<StoryNode[]>([]);
 
-  const handleStart = () => {
+  const handleStart = async () => {
     if (!setupData.name.trim()) return;
     setLoading(true);
     setIsStarted(true);
     
-    // Mocking the initial AI generation
-    setTimeout(() => {
-      setStoryHistory([{
-        chapter: 1,
-        text: `Once upon a time in a ${setupData.setting}, a brave adventurer named ${setupData.name} discovered a glowing path. The trees seemed to whisper secrets as ${setupData.name} walked. Suddenly, the path split into two directions. To the left, there was a dark, mysterious cave. To the right, a sparkling bridge made of rainbow light.`,
-        choices: [
-          { id: "cave", text: "Explore the dark cave" },
-          { id: "bridge", text: "Cross the rainbow bridge" }
-        ]
-      }]);
+    try {
+      const res = await fetch("/api/generate-adventure", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: setupData.name.trim(),
+          age: setupData.age,
+          setting: setupData.setting,
+          chapter: 0,
+        }),
+      });
+      
+      const data = await res.json();
+      if (data.error) throw new Error(data.error);
+      setStoryHistory([data]);
+    } catch (err) {
+      console.error("Adventure start error:", err);
+      alert("Failed to start adventure. Please try again!");
+      setIsStarted(false);
+    } finally {
       setLoading(false);
-    }, 1500);
+    }
   };
 
-  const handleChoice = (choiceId: string) => {
+  const handleChoice = async (choiceId: string) => {
     setLoading(true);
     
-    // Mocking the subsequent AI generations based on choice
-    setTimeout(() => {
-      const currentChapter = storyHistory.length + 1;
-      let newNode: StoryNode;
-
-      if (currentChapter === 2) {
-        if (choiceId === "cave") {
-          newNode = {
-            chapter: 2,
-            text: `Inside the cave, it was cold and quiet. ${setupData.name} found a sleeping dragon guarding a treasure chest! The dragon woke up and blinked its big, friendly eyes. "Hello," said the dragon. "Would you like to hear a joke or see what's in my chest?"`,
-            choices: [
-              { id: "joke", text: "Ask the dragon for a joke" },
-              { id: "chest", text: "Ask to see inside the chest" }
-            ]
-          };
-        } else {
-          newNode = {
-            chapter: 2,
-            text: `As ${setupData.name} crossed the bridge, they felt lighter than air. On the other side, a group of fairies was having a tea party. They invited ${setupData.name} to join them. They offered a slice of star-cake and a cup of moon-tea.`,
-            choices: [
-              { id: "cake", text: "Eat the star-cake" },
-              { id: "tea", text: "Drink the moon-tea" }
-            ]
-          };
-        }
-      } else {
-        // Ending Chapter
-        newNode = {
-          chapter: 3,
-          text: `With a flash of light, the magical journey came to an end. ${setupData.name} learned that the real treasure was the friends they made along the way. They returned home, ready for their next big adventure!`,
-          isEnding: true
-        };
-      }
-
-      setStoryHistory([...storyHistory, newNode]);
+    const currentChapter = storyHistory.length;
+    const lastNode = storyHistory[storyHistory.length - 1];
+    
+    try {
+      const res = await fetch("/api/generate-adventure", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: setupData.name.trim(),
+          age: setupData.age,
+          setting: setupData.setting,
+          choiceId,
+          chapter: currentChapter,
+          previousText: lastNode?.text || "",
+        }),
+      });
+      
+      const data = await res.json();
+      if (data.error) throw new Error(data.error);
+      setStoryHistory([...storyHistory, data]);
+    } catch (err) {
+      console.error("Adventure choice error:", err);
+      alert("Failed to continue the adventure. Please try again!");
+    } finally {
       setLoading(false);
-    }, 1500);
+    }
   };
 
   const resetStory = () => {

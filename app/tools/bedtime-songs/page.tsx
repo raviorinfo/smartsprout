@@ -16,7 +16,7 @@ export default function BedtimeSongsPage() {
   const [songLyrics, setSongLyrics] = useState<string | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
 
-  const handleGenerate = (e: React.FormEvent) => {
+  const handleGenerate = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name.trim() || !formData.dayActivity.trim()) return;
     
@@ -24,35 +24,27 @@ export default function BedtimeSongsPage() {
     setSongLyrics(null);
     setIsPlaying(false);
 
-    // Mock API call
-    setTimeout(() => {
-      const mockLyrics = `
-(Verse 1)
-The sun goes down, the stars come out,
-It's time to rest for little ${formData.name}.
-You played so hard, you ran about,
-And ${formData.dayActivity.toLowerCase()} without a doubt.
+    try {
+      const res = await fetch("/api/generate-bedtime-song", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.name.trim(),
+          age: formData.age,
+          dayActivity: formData.dayActivity.trim(),
+          theme: formData.theme,
+        }),
+      });
 
-(Chorus)
-Close your eyes, drift away,
-You had a truly wonderful day.
-The moon is smiling shining bright,
-Sweet dreams, my love, goodnight, goodnight.
-
-(Verse 2)
-The world is quiet, soft and still,
-The wind is whispering on the hill.
-Tomorrow brings more games to play,
-But now it's time to end the day.
-
-(Outro)
-Sleep tight, little one, sleep tight...
-Goodnight.
-      `.trim();
-      
-      setSongLyrics(mockLyrics);
+      const data = await res.json();
+      if (data.error) throw new Error(data.error);
+      setSongLyrics(data.lyrics);
+    } catch (err) {
+      console.error("Bedtime song error:", err);
+      alert("Failed to generate your lullaby. Please try again!");
+    } finally {
       setIsGenerating(false);
-    }, 2500);
+    }
   };
 
   const togglePlay = () => {

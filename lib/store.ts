@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 export interface WorksheetQuestion {
   question: string;
@@ -30,20 +31,27 @@ interface BookCartState {
   clearColoringPages: () => void;
 }
 
-export const useBookCart = create<BookCartState>((set) => ({
-  worksheets: [],
-  coloringPages: [],
-  addWorksheet: (ws) => set((state) => ({ worksheets: [...state.worksheets, ws] })),
-  removeWorksheet: (index) =>
-    set((state) => ({
-      worksheets: state.worksheets.filter((_, i) => i !== index),
-    })),
-  addColoringPage: (page) =>
-    set((state) => ({ coloringPages: [...state.coloringPages, page] })),
-  removeColoringPage: (index) =>
-    set((state) => ({
-      coloringPages: state.coloringPages.filter((_, i) => i !== index),
-    })),
-  clearWorksheets: () => set({ worksheets: [] }),
-  clearColoringPages: () => set({ coloringPages: [] }),
-}));
+export const useBookCart = create<BookCartState>()(
+  persist(
+    (set) => ({
+      worksheets: [],
+      coloringPages: [],
+      addWorksheet: (ws) => set((state) => ({ worksheets: [...state.worksheets, ws] })),
+      removeWorksheet: (index) =>
+        set((state) => ({
+          worksheets: state.worksheets.filter((_, i) => i !== index),
+        })),
+      addColoringPage: (page) =>
+        set((state) => ({ coloringPages: [...state.coloringPages, page] })),
+      removeColoringPage: (index) =>
+        set((state) => ({
+          coloringPages: state.coloringPages.filter((_, i) => i !== index),
+        })),
+      clearWorksheets: () => set({ worksheets: [] }),
+      clearColoringPages: () => set({ coloringPages: [] }),
+    }),
+    {
+      name: "kiddleaf-book-cart",
+    }
+  )
+);

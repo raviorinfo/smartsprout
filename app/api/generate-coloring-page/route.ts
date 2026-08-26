@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { generateImage } from "@/lib/openai";
+import { checkRateLimit, getClientId } from "@/lib/rateLimit";
 
 // A simple SVG coloring page generator for mock mode
 function generateMockColoringPage(prompt: string): string {
@@ -191,6 +192,11 @@ function generateMockColoringPage(prompt: string): string {
 
 export async function POST(request: NextRequest) {
   try {
+    const { allowed, remaining } = checkRateLimit(getClientId(request), { maxRequests: 10, windowMs: 60000 });
+    if (!allowed) {
+      return NextResponse.json({ error: "Too many requests. Please wait a moment and try again!" }, { status: 429, headers: { "X-RateLimit-Remaining": remaining.toString() } });
+    }
+
     const body = await request.json();
     const { prompt } = body;
 
